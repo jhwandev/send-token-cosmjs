@@ -8,11 +8,14 @@ function Header() {
 
   useEffect(() => {
     switch (location.pathname) {
-      case "/basic":
-        setBtnActive("1");
+      case "/":
+        setBtnActive("nova");
         break;
-      case "/advanced":
-        setBtnActive("2");
+      case "/sendNova":
+        setBtnActive("nova");
+        break;
+      case "/sendAtom":
+        setBtnActive("atom");
         break;
       default:
         break;
@@ -27,22 +30,22 @@ function Header() {
       </div>
       <div className="flex justify-center">
         <Link
-          to="/basic"
+          to="/sendNova"
           className={
             "min-w-[100px] text-center hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-300 mr-3 py-5 px-3 text-white rounded font-bold " +
-            ("1" === btnActive ? "bg-blue-500 rounded" : "")
+            ("nova" === btnActive ? "bg-blue-500 rounded" : "")
           }
         >
-          Basic
+          NOVA
         </Link>
         <Link
-          to="/advanced"
+          to="/sendAtom"
           className={
-            "min-w-[100px] text-center hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-300 mr-3 py-5 px-3 text-white rounded font-bold " +
-            ("2" === btnActive ? "bg-blue-500 rounded" : "")
+            "min-w-[100px] text-center hover:bg-violet-600 active:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-300 mr-3 py-5 px-3 text-white rounded font-bold " +
+            ("atom" === btnActive ? "bg-violet-500 rounded" : "")
           }
         >
-          Advanced
+          ATOM
         </Link>
       </div>
     </div>

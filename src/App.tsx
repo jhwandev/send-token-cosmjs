@@ -1,12 +1,12 @@
 import { Routes, Route } from "react-router-dom";
-import Basic from "./pages/basic";
-import Advanced from "./pages/advanced";
+import SendToken from "./pages/sendToken";
 
 function App() {
   return (
     <Routes>
-      <Route path="/basic" element={<Basic />} />
-      <Route path="/advanced" element={<Advanced />} />
+      <Route path="/" element={<SendToken network="nova" />} />
+      <Route path="/sendNova" element={<SendToken network="nova" />} />
+      <Route path="/sendAtom" element={<SendToken network="cosmos" />} />
     </Routes>
   );
 }
