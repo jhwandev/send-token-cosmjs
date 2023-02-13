@@ -10,8 +10,16 @@ import {
   SigningStargateClient,
 } from "@cosmjs/stargate";
 
-//Rpc주소
-const rpc = "rpc.sentry-01.theta-testnet.polypore.xyz:26657"; //cosmos testnet
+import { RPC_URL, DENOM } from "../utils/const";
+
+interface SystemError {
+  code: string;
+  message: string;
+}
+interface resultObject {
+  isSuccess: boolean;
+  message: string;
+}
 
 /**
  * 니모닉 시드로 signer 생성
@@ -32,8 +40,11 @@ export const getSignerFromMnemonic = async (
  * @param address 지갑주소
  * @returns
  */
-export const getBalance = async (address: string): Promise<readonly Coin[]> => {
-  const client = await StargateClient.connect(rpc);
+export const getBalance = async (
+  address: string,
+  network: string
+): Promise<readonly Coin[]> => {
+  const client = await StargateClient.connect(RPC_URL[network]);
   const result = await client.getAllBalances(address);
   return result;
 };
@@ -48,28 +59,98 @@ export const getBalance = async (address: string): Promise<readonly Coin[]> => {
 export const sendToken = async (
   mnemonic: string,
   receiver: string,
-  amount: string
-): Promise<DeliverTxResponse> => {
-  // 니모닉 추출
-  const signer: OfflineDirectSigner = await getSignerFromMnemonic(
-    mnemonic,
-    "cosmos"
-  );
+  amount: string,
+  network: string
+): Promise<resultObject> => {
+  let signer: OfflineDirectSigner;
+
+  // 니모닉 시드로 signer 생성
+  try {
+    signer = await getSignerFromMnemonic(mnemonic, network);
+  } catch (error) {
+    const err = error as SystemError;
+    const resultObject = {
+      isSuccess: false,
+      message: err.message,
+    } as resultObject;
+    return resultObject;
+  }
+
+  // sender 주소 추출
   const sender: string = (await signer.getAccounts())[0].address;
 
   // signingClient 생성
-  const signingClient: SigningStargateClient =
-    await SigningStargateClient.connectWithSigner(rpc, signer);
+  let signingClient: SigningStargateClient;
 
+  try {
+    signingClient = await SigningStargateClient.connectWithSigner(
+      RPC_URL[network],
+      signer
+    );
+  } catch (error) {
+    const err = error as SystemError;
+    const resultObject = {
+      isSuccess: false,
+      message: err.message,
+    } as resultObject;
+    return resultObject;
+  }
+
+  const beforeSenderBalance = await getBalance(sender, network);
+  const beforeReceiverBalance = await getBalance(receiver, network);
   // 토큰 전송
-  const result = await signingClient.sendTokens(
-    sender, //sender
-    receiver, //receiver
-    [{ denom: "uatom", amount: amount }],
-    {
-      amount: [{ denom: "uatom", amount: "500" }],
-      gas: "200000",
+  let result: DeliverTxResponse;
+
+  try {
+    result = await signingClient.sendTokens(
+      sender,
+      receiver,
+      [{ denom: DENOM[network], amount: amount }],
+      {
+        amount: [{ denom: DENOM[network], amount: "500" }],
+        gas: "200000",
+      }
+    );
+  } catch (error) {
+    const err = error as SystemError;
+    const resultObject = {
+      isSuccess: false,
+      message: err.message,
+    } as resultObject;
+    return resultObject;
+  }
+
+  const afterSenderBalance = await getBalance(sender, network);
+  const afterReceiverBalance = await getBalance(receiver, network);
+
+  const resultMessage = `
+  sender : ${getBalanceByDenom(
+    beforeSenderBalance,
+    DENOM[network]
+  )} -> ${getBalanceByDenom(afterSenderBalance, DENOM[network])}
+  receiver : ${getBalanceByDenom(
+    beforeReceiverBalance,
+    DENOM[network]
+  )} -> ${getBalanceByDenom(afterReceiverBalance, DENOM[network])} 
+  txHash: ${result.transactionHash}`;
+
+  const resultObject = {
+    isSuccess: true,
+    message: resultMessage,
+  } as resultObject;
+  return resultObject;
+};
+
+/**
+ * denom으로 잔액 조회
+ * @param array
+ * @param denom
+ * @returns
+ */
+const getBalanceByDenom = (array: readonly Coin[], denom: string) => {
+  for (let i = 0; i < array.length; i++) {
+    if (array[i].denom === denom) {
+      return String(Number(array[i].amount) / 10 ** 6);
     }
-  );
-  return result;
+  }
 };
