@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import { sendToken } from "../api/cosm";
 
 function Basic() {
-  const [sendButtonText, setSendButtonText] = useState("SEND");
   const [mnemonic, setMnemonic] = useState("");
   const [receiverAddress, setReceiverAddress] = useState("");
-  const [amount, setAmount] = useState("");
+  const [amount, setAmount] = useState("0");
+  const [isLoading, setIsLoading] = useState(false);
+  const [sendButtonText, setSendButtonText] = useState("SEND");
 
   const onChangeMnemonic = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setMnemonic(e.target.value);
@@ -17,11 +19,25 @@ function Basic() {
   };
 
   const onChangeAmount = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const amount = Number(e.target.value);
+    const value = e.target.value;
+    const amount = Number(value);
     if (Number.isNaN(amount)) return;
     if (Number.isInteger(amount * 10 ** 6) === false) return;
 
-    setAmount(e.target.value);
+    setAmount(value);
+  };
+
+  const sendNova = async () => {
+    setIsLoading(true);
+    setSendButtonText("SENDING...");
+    const result = await sendToken(
+      mnemonic,
+      receiverAddress,
+      String(Number(amount) * 10 ** 6)
+    );
+    setIsLoading(false);
+    setSendButtonText("SEND");
+    console.log(result);
   };
 
   return (
@@ -53,9 +69,8 @@ function Basic() {
         <button
           style={{ fontSize: "20px" }}
           className="w-[90%] max-w-lg mt-10 bg-blue-500 font-bold hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-300 mr-3 py-5 px-3 text-white rounded "
-
-          // onClick={sendNova}
-          // disabled={isLoading}
+          onClick={sendNova}
+          disabled={isLoading}
         >
           {sendButtonText}
         </button>
