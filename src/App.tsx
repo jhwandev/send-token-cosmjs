@@ -1,10 +1,13 @@
+import { Routes, Route } from "react-router-dom";
+import SendNova from "./pages/sendNova";
+import SendNovaUX from "./pages/sendNovaUX";
+
 function App() {
   return (
-    <div>
-      <header className="max-w-[100%] flex items-center justify-center min-h-[20vh] font-bold text-4xl text-white">
-        helloWorld
-      </header>
-    </div>
+    <Routes>
+      <Route path="/sendNova" element={<SendNova />} />
+      <Route path="/sendNovaUX" element={<SendNovaUX />} />
+    </Routes>
   );
 }
 
