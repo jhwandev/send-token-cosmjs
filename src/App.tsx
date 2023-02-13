@@ -1,12 +1,12 @@
 import { Routes, Route } from "react-router-dom";
-import SendNova from "./pages/sendNova";
-import SendNovaUX from "./pages/sendNovaUX";
+import Basic from "./pages/basic";
+import Advanced from "./pages/advanced";
 
 function App() {
   return (
     <Routes>
-      <Route path="/sendNova" element={<SendNova />} />
-      <Route path="/sendNovaUX" element={<SendNovaUX />} />
+      <Route path="/basic" element={<Basic />} />
+      <Route path="/advanced" element={<Advanced />} />
     </Routes>
   );
 }

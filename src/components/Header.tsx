@@ -8,10 +8,10 @@ function Header() {
 
   useEffect(() => {
     switch (location.pathname) {
-      case "/sendNova":
+      case "/basic":
         setBtnActive("1");
         break;
-      case "/sendNovaUX":
+      case "/advanced":
         setBtnActive("2");
         break;
       default:
@@ -20,28 +20,29 @@ function Header() {
   }, [location]);
 
   return (
-    <div className="min-h-[10vh] text-white p-10">
-      <div className="mb-10 flex justify-center font-bold text-4xl ">
+    <div className="h-[25vh] text-white p-16">
+      <div className="mb-10 flex justify-center font-bold text-4xl">
         <Airplane className="w-10" />
         &nbsp; Token Sender
       </div>
       <div className="flex justify-center">
         <Link
-          to="/sendNova"
+          to="/basic"
           className={
-            "mr-3 py-5 px-3 text-white " +
-            ("1" === btnActive ? "bg-blue-500" : "")
+            "min-w-[100px] text-center hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-300 mr-3 py-5 px-3 text-white rounded font-bold " +
+            ("1" === btnActive ? "bg-blue-500 rounded" : "")
           }
         >
-          Send-Nova
+          Basic
         </Link>
         <Link
-          to="/sendNovaUX"
+          to="/advanced"
           className={
-            "py-5 px-3 text-white " + ("2" === btnActive ? "bg-blue-500" : "")
+            "min-w-[100px] text-center hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-300 mr-3 py-5 px-3 text-white rounded font-bold " +
+            ("2" === btnActive ? "bg-blue-500 rounded" : "")
           }
         >
-          Send-Nova-UX
+          Advanced
         </Link>
       </div>
     </div>
