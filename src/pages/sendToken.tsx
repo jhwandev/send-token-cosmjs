@@ -40,10 +40,22 @@ function SendNova({ network }: { network: string }) {
   const { isSuccess, message } = result;
 
   /**
-   *
+   * network 변경시 form 초기화
    */
   useEffect(() => {
     setSendButtonText(`SEND ${TICKER[network].toUpperCase()}`);
+    setAmount("");
+    setReceiverAddress("");
+    setMnemonic("");
+    setErrors({
+      mnemonicError: "",
+      receiverAddressError: "",
+      amountError: "",
+    });
+    setResult({
+      isSuccess: false,
+      message: "",
+    });
   }, [network]);
 
   /**
