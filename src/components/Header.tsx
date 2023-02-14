@@ -23,8 +23,8 @@ function Header() {
   }, [location]);
 
   return (
-    <div className="h-[25vh] text-white p-16">
-      <div className="mb-10 flex justify-center font-bold text-4xl">
+    <div className="h-[25vh] text-white p-10">
+      <div className="mb-10 flex justify-center font-bold text-2xl">
         <Airplane className="w-10" />
         &nbsp; Token Sender
       </div>
@@ -32,7 +32,7 @@ function Header() {
         <Link
           to="/sendNova"
           className={
-            "min-w-[100px] text-center hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-300 mr-3 py-5 px-3 text-white rounded font-bold " +
+            "min-w-[100px] text-center hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-300 mr-3 py-4 px-3 text-white rounded font-bold " +
             ("nova" === btnActive ? "bg-blue-500 rounded" : "")
           }
         >
@@ -41,7 +41,7 @@ function Header() {
         <Link
           to="/sendAtom"
           className={
-            "min-w-[100px] text-center hover:bg-violet-600 active:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-300 mr-3 py-5 px-3 text-white rounded font-bold " +
+            "min-w-[100px] text-center hover:bg-violet-600 active:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-300 mr-3 py-4 px-3 text-white rounded font-bold " +
             ("atom" === btnActive ? "bg-violet-500 rounded" : "")
           }
         >

@@ -67,7 +67,7 @@ function SendNova({ network }: { network: string }) {
     isValidMnemonic(mnemonic)
       ? setIsValid(true)
       : setIsValid(false);
-  }, [amount, receiverAddress, mnemonic]);
+  }, [amount, receiverAddress, mnemonic, network]);
 
   // onChangeEvents
   const onChangeMnemonic = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
