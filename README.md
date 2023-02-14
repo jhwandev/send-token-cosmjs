@@ -1,47 +1,80 @@
-# Getting Started with Create React App
+# Send Token CosmJS
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 프로젝트 기획
+- A 계정의 토큰을 B 계정으로 보내는 프로그램 ([슈퍼노바](https://docs.supernovaprotocol.xyz/) 테스트넷 + 코스모스 테스트넷)
+  - 프론트엔드에는 3개의 text area와 1개의 버튼이 존재
+  - 한 text area는 코인을 보내는 지갑의 니모닉이 들어감
+  - 다른 text area는 코인을 받는 지갑의 주소가 들어감
+  - 마지막 text area는 보내고자 하는 코인의 수량이 들어감
+  - 버튼을 누르면 송금이 실행됨
 
-## Available Scripts
 
-In the project directory, you can run:
 
-### `npm start`
+## 개발환경
+- React.js
+  - react-router-dom ()
+- TypeScript
+- Node.js 
+- [tailwindCSS](https://tailwindcss.com)
+- [cosmJS](https://github.com/cosmos/cosmjs) (코스모스 SDK)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## 시작하기
 
-### `npm test`
+1. ```npm install``` 의존성 패키지 설치
+2. ```npm start``` 개발 모드에서 앱을 실행합니다. (http://localhost:3000)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 작동방식 요약
+```typescript
 
-### `npm run build`
+// 1. signer (니모닉 키)
+const signer = DirectSecp256k1HdWallet.fromMnemonic(mnemonic, {
+    prefix: 'nova' // or cosmos
+  });
+  
+// 2. signingClient (rpc, signer)
+signingClient = await SigningStargateClient.connectWithSigner(
+  "rpc.sentry-01.theta-testnet.polypore.xyz:26657" //cosmos testnet
+  signer
+);
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+// 3. 전송 (sigingClient)
+result = await signingClient.sendTokens(
+  sender,
+  receiver,
+  [{ denom: 'nova', amount: amount }],
+  {
+    amount: [{ denom: 'nova', amount: "500" }],
+    gas: "200000",
+  }
+);    
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 프로젝트 구조
+```
+SEND-TOKEN-COSMJS
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+├── node_modules
+├── public
+└── src 
+     ├── api
+     ├── assets
+     ├── components
+     ├── pages
+     ├── styles
+     ├── utils
+     ├── package.json
+     └── README.md
+```
 
-### `npm run eject`
+## 참고자료
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+[Cosmos Developer Portal](https://tutorials.cosmos.network/)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+[CosmJS Github](https://github.com/cosmos/cosmjs)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+[SuperNova Docs](https://docs.supernovaprotocol.xyz/)
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-# send-token-cosmjs
