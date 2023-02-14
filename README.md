@@ -12,7 +12,7 @@
 
 ## 개발환경
 - React.js
-  - react-router-dom ()
+  - react-router-dom
 - TypeScript
 - Node.js 
 - [tailwindCSS](https://tailwindcss.com)
