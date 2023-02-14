@@ -69,11 +69,9 @@ SEND-TOKEN-COSMJS
 
 ## 참고자료
 
-[Cosmos Developer Portal](https://tutorials.cosmos.network/)
-
-[CosmJS Github](https://github.com/cosmos/cosmjs)
-
-[SuperNova Docs](https://docs.supernovaprotocol.xyz/)
+- [Cosmos Developer Portal](https://tutorials.cosmos.network/)
+- [CosmJS Github](https://github.com/cosmos/cosmjs)
+- [SuperNova Docs](https://docs.supernovaprotocol.xyz/)
 
 
 
