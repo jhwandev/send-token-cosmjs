@@ -36,16 +36,35 @@ export const getSignerFromMnemonic = async (
 };
 
 /**
- * 지갑주소로 잔액 조회
+ * 지갑주소, 네트워크로 전체토큰의 잔액 조회
  * @param address 지갑주소
  * @returns
  */
-export const getBalance = async (
+export const getAllBalance = async (
   address: string,
   network: string
 ): Promise<readonly Coin[]> => {
   const client = await StargateClient.connect(RPC_URL[network]);
   const result = await client.getAllBalances(address);
+  client.disconnect();
+  return result;
+};
+
+/**
+ * 지갑주소, 네트워크, denom으로 특정토큰의 잔액 조회
+ * @param address
+ * @param network
+ * @param denom
+ * @returns
+ */
+export const getBalanceByDenom = async (
+  address: string,
+  network: string,
+  denom: string
+): Promise<Coin> => {
+  const client = await StargateClient.connect(RPC_URL[network]);
+  const result = await client.getBalance(address, denom);
+  client.disconnect();
   return result;
 };
 
@@ -96,8 +115,17 @@ export const sendToken = async (
     return resultObject;
   }
 
-  const beforeSenderBalance = await getBalance(sender, network);
-  const beforeReceiverBalance = await getBalance(receiver, network);
+  // 전송전 토큰갯수
+  const beforeSenderBalance: Coin = await getBalanceByDenom(
+    sender,
+    network,
+    DENOM[network]
+  );
+  const beforeReceiverBalance: Coin = await getBalanceByDenom(
+    receiver,
+    network,
+    DENOM[network]
+  );
   // 토큰 전송
   let result: DeliverTxResponse;
 
@@ -118,20 +146,36 @@ export const sendToken = async (
       message: err.message,
     } as resultObject;
     return resultObject;
+  } finally {
+    // client disconnect
+    signingClient.disconnect();
   }
 
-  const afterSenderBalance = await getBalance(sender, network);
-  const afterReceiverBalance = await getBalance(receiver, network);
+  //전송 후 토큰갯수
+  const afterSenderBalance: Coin = await getBalanceByDenom(
+    sender,
+    network,
+    DENOM[network]
+  );
+  const afterReceiverBalance: Coin = await getBalanceByDenom(
+    receiver,
+    network,
+    DENOM[network]
+  );
+
+  // 형식에 맞게 convert
+  const beforeSenderAmount: number = convertBalance(beforeSenderBalance.amount);
+  const beforeReceiverAmount: number = convertBalance(
+    beforeReceiverBalance.amount
+  );
+  const afterSenderAmount: number = convertBalance(afterSenderBalance.amount);
+  const afterReceiverAmount: number = convertBalance(
+    afterReceiverBalance.amount
+  );
 
   const resultMessage = `
-  sender : ${getBalanceByDenom(
-    beforeSenderBalance,
-    DENOM[network]
-  )} -> ${getBalanceByDenom(afterSenderBalance, DENOM[network])}
-  receiver : ${getBalanceByDenom(
-    beforeReceiverBalance,
-    DENOM[network]
-  )} -> ${getBalanceByDenom(afterReceiverBalance, DENOM[network])} 
+  sender : ${beforeSenderAmount} -> ${afterSenderAmount}
+  receiver : ${beforeReceiverAmount} -> ${afterReceiverAmount} 
   txHash: ${result.transactionHash}`;
 
   const resultObject = {
@@ -141,16 +185,6 @@ export const sendToken = async (
   return resultObject;
 };
 
-/**
- * denom으로 잔액 조회
- * @param array
- * @param denom
- * @returns
- */
-const getBalanceByDenom = (array: readonly Coin[], denom: string) => {
-  for (let i = 0; i < array.length; i++) {
-    if (array[i].denom === denom) {
-      return String(Number(array[i].amount) / 10 ** 6);
-    }
-  }
+const convertBalance = (balance: string): number => {
+  return Number(balance) / 10 ** 6;
 };
