@@ -24,6 +24,11 @@ function Header() {
 
   return (
     <div className="h-[25vh] text-white p-10">
+      <div className="font-bold top-5 right-5 absolute text-sm float-right text-white">
+        <button className="border p-1.5 rounded-lg active:bg-gray-500">
+          KO
+        </button>
+      </div>
       <div className="mb-7 flex justify-center items-center font-bold text-2xl">
         <Airplane className="w-10" />
         &nbsp;Token Sender
