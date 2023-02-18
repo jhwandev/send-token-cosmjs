@@ -63,7 +63,7 @@ SEND-TOKEN-COSMJS
      ├── components
      ├── pages
      ├── styles
-     └─ utils
+     └── utils
 ```
 
 ## 참고자료
