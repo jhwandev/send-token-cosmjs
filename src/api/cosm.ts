@@ -10,7 +10,7 @@ import {
   SigningStargateClient,
 } from "@cosmjs/stargate";
 
-import { RPC_URL, DENOM } from "../utils/const";
+import { RPC_URL, DENOM } from "utils/const";
 
 interface SystemError {
   code: string;

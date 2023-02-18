@@ -1,11 +1,12 @@
+import App from "App";
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./styles/index.css";
-import "./styles/customModal.css";
-import App from "./App";
-import Header from "./components/Header";
 import { BrowserRouter } from "react-router-dom";
-import Footer from "./components/Footer";
+import Header from "components/Header";
+import Footer from "components/Footer";
+import "styles/index.css";
+import "styles/customModal.css";
+import "locale/i18n";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
