@@ -1,4 +1,5 @@
 # Send Token CosmJS
+https://send-token-cosmjs.vercel.app/
 
 ## 프로젝트 기획
 - A 계정의 토큰을 B 계정으로 보내는 프로그램 ([슈퍼노바](https://docs.supernovaprotocol.xyz/) 테스트넷 + 코스모스 테스트넷)
@@ -62,9 +63,7 @@ SEND-TOKEN-COSMJS
      ├── components
      ├── pages
      ├── styles
-     ├── utils
-     ├── package.json
-     └── README.md
+     └── utils
 ```
 
 ## 참고자료

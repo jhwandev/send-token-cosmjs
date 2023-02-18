@@ -5,8 +5,8 @@ type ObjType = {
 };
 
 export const RPC_URL: ObjType = {
-  nova: "champagne.dev-supernova.xyz:26657",
-  cosmos: "rpc.sentry-01.theta-testnet.polypore.xyz:26657",
+  nova: "wss://champagne-tendermint.dev-supernova.xyz",
+  cosmos: "wss://rpc.sentry-01.theta-testnet.polypore.xyz",
 };
 
 export const DENOM: ObjType = {
