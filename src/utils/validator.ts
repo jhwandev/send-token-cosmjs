@@ -65,6 +65,34 @@ export const isValidAmount = (value: string): string => {
 };
 
 /**
+ * 니모닉 시드 유효성 검사 - onChange 이벤트용
+ * @param value
+ * @returns
+ */
+export const isValidMnemonicForChangeEvent = (value: string): string => {
+  // 알파벳과 공백 이외에 다른 문자 있는지 확인
+  const alphabetSpace = RegExp(/[^a-z\s]/);
+  const isNotValidType = alphabetSpace.test(value);
+  if (isNotValidType) return "valid.mnemonic.01";
+
+  return "";
+};
+
+/**
+ * 토큰전송 Amount 유효성 검사 - onChange 이벤트용
+ * @param value
+ * @returns
+ */
+export const isValidAddressForChangeEvent = (value: string): string => {
+  // 소문자 알파벳과 숫자 이외에 다른 문자 있는지 확인
+  const alphabetNumber = RegExp(/[^a-z0-9]/);
+  const isNotValidType = alphabetNumber.test(value);
+  if (isNotValidType) return "valid.receiverAddress.02";
+
+  return "";
+};
+
+/**
  * 토큰전송 Amount 유효성 검사 - onChange 이벤트용
  * @param value
  * @returns

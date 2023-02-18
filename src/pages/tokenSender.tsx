@@ -6,6 +6,8 @@ import {
   isValidAddress,
   isValidAmount,
   isValidAmountForChangeEvent,
+  isValidAddressForChangeEvent,
+  isValidMnemonicForChangeEvent,
 } from "utils/validator";
 import { TICKER } from "utils/const";
 import { useTranslation } from "react-i18next";
@@ -74,12 +76,30 @@ function TokenSender({ network }: { network: string }) {
 
   // onChangeEvents
   const onChangeMnemonic = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setMnemonic(e.target.value);
+    const value = e.target.value.toLocaleLowerCase();
+    if (isValidMnemonicForChangeEvent(value) !== "") {
+      setErrors({
+        ...errors,
+        mnemonicError: isValidMnemonicForChangeEvent(value),
+      });
+      return;
+    } else {
+      setMnemonic(value);
+    }
   };
   const onChangeReciverAddress = (
     e: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
-    setReceiverAddress(e.target.value);
+    const value = e.target.value.toLocaleLowerCase();
+    if (isValidAddressForChangeEvent(value) !== "") {
+      setErrors({
+        ...errors,
+        receiverAddressError: isValidAddressForChangeEvent(value),
+      });
+      return;
+    } else {
+      setReceiverAddress(value);
+    }
   };
   const onChangeAmount = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
@@ -89,8 +109,9 @@ function TokenSender({ network }: { network: string }) {
         amountError: isValidAmountForChangeEvent(value),
       });
       return;
+    } else {
+      setAmount(value);
     }
-    setAmount(value);
   };
 
   // onBlurEvents
