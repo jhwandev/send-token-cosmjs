@@ -1,0 +1,29 @@
+{
+  "title.mnemonic": "Mnemonic",
+  "title.amount": "Amount",
+  "title.receiverAddress": "ReceiverAddress",
+
+  "valid.mnemonic.01": "Only alphabets and spaces are allowed.",
+  "valid.mnemonic.02": "Mnemonic phrase must be 12 or 24 words.",
+  "valid.receiverAddress.01": "Please check if the prefix matches. ex) nova.. or cosmos..",
+  "valid.receiverAddress.02": "Only lowercase alphabets and numbers are allowed.",
+  "valid.receiverAddress.03": "Check the length ( 39 characters excluding prefix )",
+
+  "valid.amount.01": "Cannot enter a number less than or equal to zero.",
+  "valid.amount.02": "Cannot enter more than 14 digits.",
+  "valid.amount.03": "Only numbers can be entered.",
+  "valid.amount.04": "Cannot enter more than 6 decimal places.",
+
+  "placeholder.mnemonic": "12 or 24 words, ex)apple banana grape...",
+  "placeholder.receiverAddress": "ReceiverAddress, ex) ",
+  "placeholder.amount": "amount, ex)10.123",
+
+  "yes": "yes",
+  "no": "no",
+  "confirm.send.title": "Confirm to send",
+  "confirm.send.content": "Token will be sent to",
+  "confirm.network.title": "Confirm to change",
+  "confirm.network.content": "Contents being written will be completely reset. Would you like to switch to a different network?",
+
+  "button.sending": "SENDING..."
+}
