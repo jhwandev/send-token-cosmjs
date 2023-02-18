@@ -25,5 +25,7 @@
   "confirm.network.title": "Confirm to change",
   "confirm.network.content": "Contents being written will be completely reset. Would you like to switch to a different network?",
 
-  "button.sending": "SENDING..."
+  "button.sending": "SENDING...",
+  "button.send.1": "SEND",
+  "button.send.2": ""
 }

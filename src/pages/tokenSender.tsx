@@ -24,7 +24,6 @@ function TokenSender({ network }: { network: string }) {
   const [amount, setAmount] = useState<string | "">("");
   // button status
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [sendButtonText, setSendButtonText] = useState<string | "">("");
   const [isValid, setIsValid] = useState<boolean>(false);
   // textarea error message
   const [errors, setErrors] = useState({
@@ -47,8 +46,6 @@ function TokenSender({ network }: { network: string }) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    setSendButtonText(`SEND ${TICKER[network].toUpperCase()}`);
-
     setAmount("");
     setReceiverAddress("");
     setMnemonic("");
@@ -190,8 +187,7 @@ function TokenSender({ network }: { network: string }) {
    */
   const sendTokenByMnemonic = async () => {
     setIsLoading(true);
-    setSendButtonText("SENDING...");
-
+    setResult({ isSuccess: false, message: "" });
     try {
       const result = await sendToken(
         mnemonic,
@@ -206,7 +202,6 @@ function TokenSender({ network }: { network: string }) {
       setResult({ isSuccess: false, message: err.message });
     } finally {
       setIsLoading(false);
-      setSendButtonText(`SEND ${TICKER[network].toUpperCase()}`);
     }
   };
 
@@ -349,7 +344,11 @@ function TokenSender({ network }: { network: string }) {
           onClick={sendButton}
           disabled={isLoading || !isValid}
         >
-          {sendButtonText}
+          {isLoading
+            ? `${t(`button.sending`)}`
+            : `${t(`button.send.1`)}
+               ${TICKER[network].toUpperCase()} 
+               ${t(`button.send.2`)}`}
         </button>
         <div
           className={
