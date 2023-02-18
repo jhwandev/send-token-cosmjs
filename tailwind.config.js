@@ -3,7 +3,15 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        "regal-blue": "#243c5a",
+        "nova-start": "#f2ff00",
+        "nova-end": "#2b00ff",
+        "nova-start-active": "#808703",
+        "nova-end-active": "#0c0999",
+
+        "atom-start": "#6bf2ff",
+        "atom-end": "#b202e3",
+        "atom-start-active": "#49a2ab",
+        "atom-end-active": "#62017d",
       },
     },
   },

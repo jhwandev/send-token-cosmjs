@@ -240,8 +240,10 @@ function TokenSender({ network }: { network: string }) {
               onClickNetworkButton("nova");
             }}
             className={
-              "min-w-[100px] text-center hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-300 py-4 text-white rounded font-bold " +
-              ("nova" === networkBtnActive ? "bg-blue-500 rounded" : "")
+              "min-w-[100px] text-center hover:bg-gradient-to-bl from-nova-start to-nova-end active:from-nova-start-active active:to-nova-end-active focus:outline-none focus:ring focus:ring-blue-300 py-4 text-white rounded font-bold " +
+              ("nova" === networkBtnActive
+                ? "bg-gradient-to-bl from-nova-start to-nova-end rounded"
+                : "")
             }
           >
             NOVA
@@ -252,8 +254,10 @@ function TokenSender({ network }: { network: string }) {
               onClickNetworkButton("atom");
             }}
             className={
-              "min-w-[100px] text-center hover:bg-violet-600 active:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-300 py-4 text-white rounded font-bold " +
-              ("atom" === networkBtnActive ? "bg-violet-500 rounded" : "")
+              "min-w-[100px] text-center hover:bg-gradient-to-bl from-atom-start to-atom-end active:from-atom-start-active active:to-atom-end-active focus:outline-none focus:ring focus:ring-blue-300 py-4 text-white rounded font-bold " +
+              ("atom" === networkBtnActive
+                ? "bg-gradient-to-bl from-atom-start to-atom-end rounded"
+                : "")
             }
           >
             ATOM
@@ -318,8 +322,8 @@ function TokenSender({ network }: { network: string }) {
           className={
             "w-[90%] max-w-lg mt-7 text-white rounded py-5 px-3 " +
             (network === "cosmos"
-              ? "bg-violet-500 font-bold hover:bg-violet-600 active:bg-violet-700 disabled:bg-violet-900 focus:outline-none focus:ring focus:ring-violet-300"
-              : " bg-blue-500 font-bold hover:bg-blue-600 active:bg-blue-700 disabled:bg-blue-900 focus:outline-none focus:ring focus:ring-blue-300")
+              ? " bg-gradient-to-bl from-atom-start to-atom-end rounded font-bold active:from-atom-start-active active:to-atom-end-active disabled:from-atom-start-active disabled:to-atom-end-active focus:outline-none focus:ring"
+              : " bg-gradient-to-bl from-nova-start to-nova-end rounded font-bold active:from-nova-start-active active:to-nova-end-active disabled:from-nova-start-active disabled:to-nova-end-active focus:outline-none focus:ring")
           }
           onClick={sendButton}
           disabled={isLoading || !isValid}
