@@ -6,7 +6,7 @@
   "valid.mnemonic.01": "Only alphabets and spaces are allowed.",
   "valid.mnemonic.02": "Mnemonic phrase must be 12 or 24 words.",
   "valid.receiverAddress.01": "Please check if the prefix matches. ex) nova.. or cosmos..",
-  "valid.receiverAddress.02": "Only lowercase alphabets and numbers are allowed.",
+  "valid.receiverAddress.02": "Only alphabets and numbers are allowed.",
   "valid.receiverAddress.03": "Check the length ( 39 characters excluding prefix )",
 
   "valid.amount.01": "Cannot enter a number less than or equal to zero.",

@@ -21,7 +21,7 @@ function Header() {
           {langBtnText}
         </button>
       </div>
-      <div className="mb-7 flex justify-center items-center font-bold text-2xl">
+      <div className="mb-7 flex justify-center items-center font-bold text-3xl">
         <Airplane className="w-10" />
         &nbsp;Token Sender
       </div>
