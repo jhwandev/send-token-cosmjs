@@ -25,5 +25,7 @@
   "confirm.network.title": "변경확인",
   "confirm.network.content": "작성중인 내용이 모두 초기화됩니다. 네트워크를 변경하시겠습니까?",
 
-  "button.sending": "전송중..."
+  "button.sending": "전송중...",
+  "button.send.1": "",
+  "button.send.2": "전송"
 }
