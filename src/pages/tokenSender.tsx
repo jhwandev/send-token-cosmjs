@@ -12,6 +12,7 @@ import {
 import { TICKER } from "utils/const";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import NavButtons from "components/NavButtons";
 interface SystemError {
   code: string;
   message: string;
@@ -246,11 +247,16 @@ function TokenSender({ network }: { network: string }) {
       return false;
     }
   };
+  //상단바에 사용할 네트워크 목록
+  const networks = ["nova", "atom"];
 
   return (
     <div>
       <div className="flex w-[100%] min-h-[75vh] text-1xl text-white flex-col items-center">
-        <div className="flex justify-center">
+        <NavButtons networks={networks} />
+        {/* 코드 리팩토링 */}
+        {/* <div className="flex justify-center">
+          
           <button
             onClick={() => {
               onClickNetworkButton("nova");
@@ -278,7 +284,7 @@ function TokenSender({ network }: { network: string }) {
           >
             ATOM
           </button>
-        </div>
+        </div> */}
 
         <span className="flex mt-10 w-[90%] max-w-lg font-bold">
           {t(`title.mnemonic`)}
