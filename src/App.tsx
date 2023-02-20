@@ -8,6 +8,7 @@ function App() {
       <Route path="/" element={<Navigate to="/token/nova" />} />
       <Route path="/token/nova" element={<TokenSender network="nova" />} />
       <Route path="/token/atom" element={<TokenSender network="cosmos" />} />
+      <Route path="/token/osmo" element={<TokenSender network="osmosis" />} />
       <Route path="/*" element={<Navigate to="/token/nova" />} />
     </Routes>
   );

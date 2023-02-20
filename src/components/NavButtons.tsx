@@ -26,22 +26,18 @@ function NavButtons({ networks }: { networks: string[] }) {
       <div className="flex justify-center">
         {networks.map((networkName, index) => {
           return (
-            <>
-              <button
-                key={index}
-                onClick={() => {
-                  onClickNetworkButton(networkName);
-                }}
-                className={
-                  "m-1.5 min-w-[100px] text-center hover:bg-blue-500 active:bg-blue-300 focus:outline-none focus:ring focus:ring-blue-300 py-4 text-white rounded font-bold " +
-                  (networkName === networkBtnActive
-                    ? "bg-blue-500 rounded"
-                    : "")
-                }
-              >
-                {networkName.toUpperCase()}
-              </button>
-            </>
+            <button
+              key={index}
+              onClick={() => {
+                onClickNetworkButton(networkName);
+              }}
+              className={
+                "m-1.5 min-w-[100px] text-center hover:bg-nav active:bg-nav-light focus:outline-none focus:ring focus:ring-nav-light py-4 text-white rounded font-bold " +
+                (networkName === networkBtnActive ? "bg-nav rounded" : "")
+              }
+            >
+              {networkName.toUpperCase()}
+            </button>
           );
         })}
       </div>

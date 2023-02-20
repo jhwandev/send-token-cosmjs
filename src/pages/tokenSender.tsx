@@ -9,9 +9,8 @@ import {
   isValidAddressForChangeEvent,
   isValidMnemonicForChangeEvent,
 } from "utils/validator";
-import { TICKER } from "utils/const";
+import { PREFIX, TICKER } from "utils/const";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
 import NavButtons from "components/NavButtons";
 interface SystemError {
   code: string;
@@ -41,10 +40,6 @@ function TokenSender({ network }: { network: string }) {
   //i18n
   const { t } = useTranslation();
   const { mnemonicError, receiverAddressError, amountError } = errors;
-  const [networkBtnActive, setNetworkBtnActive] = useState<string | "">(
-    TICKER[network]
-  );
-  const navigate = useNavigate();
 
   useEffect(() => {
     setAmount("");
@@ -66,7 +61,7 @@ function TokenSender({ network }: { network: string }) {
    */
   useEffect(() => {
     isValidAmount(amount) === "" &&
-    isValidAddress(receiverAddress, network) === "" &&
+    isValidAddress(receiverAddress, PREFIX[network]) === "" &&
     isValidMnemonic(mnemonic) === ""
       ? setIsValid(true)
       : setIsValid(false);
@@ -140,7 +135,7 @@ function TokenSender({ network }: { network: string }) {
       return;
     }
     // 유효성 검사
-    isValidAddress(value, network) === ""
+    isValidAddress(value, PREFIX[network]) === ""
       ? setErrors({ ...errors, receiverAddressError: "" })
       : setErrors({
           ...errors,
@@ -207,85 +202,25 @@ function TokenSender({ network }: { network: string }) {
   };
 
   /**
-   * 버튼 클릭시 네트워크 변경
-   * @param token
-   */
-  const onClickNetworkButton = (token: string) => {
-    if (!isInputDataEmpty()) {
-      confirmAlert({
-        title: `${t("confirm.network.title")}`,
-        message: `${t("confirm.network.content")}`,
-        buttons: [
-          {
-            label: "Yes",
-            onClick: () => {
-              navigate("/token/" + token);
-              setNetworkBtnActive(token);
-            },
-          },
-          {
-            label: "No",
-            onClick: () => {},
-          },
-        ],
-      });
-      return;
-    } else {
-      navigate("/token/" + token);
-      setNetworkBtnActive(token);
-    }
-  };
-
-  /**
    * 빈값인지 확인
    * @returns
    */
-  const isInputDataEmpty = (): boolean => {
-    if (mnemonic === "" && receiverAddress === "" && amount === "") {
-      return true;
-    } else {
-      return false;
-    }
-  };
+  // const isInputDataEmpty = (): boolean => {
+  //   if (mnemonic === "" && receiverAddress === "" && amount === "") {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // };
   //상단바에 사용할 네트워크 목록
-  const networks = ["nova", "atom"];
+  const networks = ["nova", "atom", "osmo"];
 
   return (
     <div>
       <div className="flex w-[100%] min-h-[75vh] text-1xl text-white flex-col items-center">
+        {/* 상단네비바 */}
         <NavButtons networks={networks} />
-        {/* 코드 리팩토링 */}
-        {/* <div className="flex justify-center">
-          
-          <button
-            onClick={() => {
-              onClickNetworkButton("nova");
-            }}
-            className={
-              "min-w-[100px] text-center hover:bg-gradient-to-bl from-nova-start to-nova-end active:from-nova-start-active active:to-nova-end-active focus:outline-none focus:ring focus:ring-blue-300 py-4 text-white rounded font-bold " +
-              ("nova" === networkBtnActive
-                ? "bg-gradient-to-bl from-nova-start to-nova-end rounded"
-                : "")
-            }
-          >
-            NOVA
-          </button>
-          <div className="w-3"></div>
-          <button
-            onClick={() => {
-              onClickNetworkButton("atom");
-            }}
-            className={
-              "min-w-[100px] text-center hover:bg-gradient-to-bl from-atom-start to-atom-end active:from-atom-start-active active:to-atom-end-active focus:outline-none focus:ring focus:ring-blue-300 py-4 text-white rounded font-bold " +
-              ("atom" === networkBtnActive
-                ? "bg-gradient-to-bl from-atom-start to-atom-end rounded"
-                : "")
-            }
-          >
-            ATOM
-          </button>
-        </div> */}
-
+        {/* textareas */}
         <span className="flex mt-10 w-[90%] max-w-lg font-bold">
           {t(`title.mnemonic`)}
         </span>
@@ -312,7 +247,9 @@ function TokenSender({ network }: { network: string }) {
             (receiverAddressError === "" ? "" : "border-2 border-rose-500")
           }
           value={receiverAddress}
-          placeholder={`${t("placeholder.receiverAddress")}${network}1234`}
+          placeholder={`${t("placeholder.receiverAddress")}${
+            PREFIX[network]
+          } 1234`}
           onChange={onChangeReciverAddress}
           onBlur={onBlurReceiverAddress}
         ></textarea>
