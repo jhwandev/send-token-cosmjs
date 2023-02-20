@@ -25,7 +25,7 @@ https://send-token-cosmjs-dev.vercel.app/
 1. ```npm install``` 의존성 패키지 설치
 2. ```npm start``` 개발 모드에서 앱을 실행합니다. (http://localhost:3000)
 
-## 작동방식 요약
+## 작동방식
   1. 입력한 mnemonic값으로 signer를 생성
   2. rpcurl, signer를 통해 signingClient 생성
   3. signingClinet를 통한 토큰 전송
@@ -54,6 +54,7 @@ result = await signingClient.sendTokens(
   }
 );    
 ```
+ - 상세내용 : [DOCS](https://busy-whimsey-f01.notion.site/send-token-cosmjs-025dbfe3856744d0956f38497d325824)
 
 ## 지원체인
 - [SuperNova Testnet](https://docs.supernovaprotocol.xyz/)
